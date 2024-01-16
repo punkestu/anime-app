@@ -1,0 +1,34 @@
+{
+  "name": "express-framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tailwind -i src/public/index.css -o src/public/style.css -w | nodemon",
+    "build": "tsc | cp -r src/views dist | cp -r src/public dist | tailwind -i dist/public/index.css -o dist/public/style.css && rm dist/public/index.css",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/express-ejs-layouts": "^2.5.4",
+    "@types/node": "^20.11.4",
+    "axios": "^1.6.5",
+    "nodemon": "^3.0.2",
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/cheerio": "^0.22.35",
+    "@types/dotenv": "^8.2.0",
+    "@types/http-errors": "^2.0.4",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "htmx.org": "^1.9.10",
+    "liquidjs": "^10.10.0"
+  }
+}
