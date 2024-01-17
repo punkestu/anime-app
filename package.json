@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tailwind -i src/public/index.css -o src/public/style.css -w | nodemon",
-    "build": "tsc | cp -r src/views dist | cp -r src/public dist | tailwind -i dist/public/index.css -o dist/public/style.css && rm dist/public/index.css",
+    "build": "tsc | cp -r src/views dist | cp -r src/public dist | tailwind -i dist/public/index.css -o dist/public/style.css",
     "start": "node dist/index.js"
   },
   "keywords": [],

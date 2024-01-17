@@ -1,5 +1,5 @@
-# Express Boilerplate
-Create express project in no time
+# Anime App
+Anime watch platform. Built with express and typescript. Scrapped from otakudesu.media
 
 ## Development
 Do nothing and call 
