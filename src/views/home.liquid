@@ -14,7 +14,7 @@
       <div class="flex w-full flex-wrap px-2">
         {% for anime in buffer.complete %}
           <div class="w-1/6 h-52 p-2">
-            <a href="#" class="w-full h-full bg-gray-500 relative">
+            <a href="/detail/{{anime.id}}" class="w-full h-full bg-gray-500 relative">
               <img
                 class="w-full h-full object-cover"
                 src="{{ anime.thumb }}"
@@ -37,7 +37,7 @@
       <div class="flex w-full flex-wrap px-2">
         {% for anime in buffer.on_going %}
           <div class="w-1/6 h-52 p-2">
-            <a href="#" class="w-full h-full bg-gray-500 relative">
+            <a href="/detail/{{anime.id}}" class="w-full h-full bg-gray-500 relative">
               <img
                 class="w-full h-full object-cover"
                 src="{{ anime.thumb }}"
