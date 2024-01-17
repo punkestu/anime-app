@@ -1,7 +1,7 @@
 import {Router} from "express";
-// import ExampleWeb from "../apps/example_web/route";
+import Anime from "../apps/anime/webRoute";
 
 const route = Router();
-// route.use("/example", ExampleWeb);
+route.use("/", Anime);
 
 export default route;

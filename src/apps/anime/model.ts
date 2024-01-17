@@ -19,6 +19,15 @@ export class Anime {
   ) {}
 }
 
+// export class AnimeMin {
+//   constructor(
+//     public id: string,
+//     public title: string,
+//     public thumb: string,
+//     public link: string
+//   ) {}
+// }
+
 export interface HomeAnime {
   on_going: Anime[];
   complete: Anime[];
