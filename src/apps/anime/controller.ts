@@ -1,41 +1,72 @@
-import {Request, Response} from "express";
-import {getHomeAnime} from "./repo";
-import {CacheI, HomeResponse} from "./model";
-import {HttpStatusCode} from "axios";
-
-let lastRefresh: Date | null;
-const cache: CacheI = {
-    home: {
-        lastRefresh: null,
-        data: {
-            complete: [],
-            on_going: []
-        }
-    }
-}
+import { Request, Response } from "express";
+import {
+  getCompleteAnime,
+  getHomeAnime,
+  getOnGoingAnime,
+  searchAnime,
+} from "./repo";
+import { ListAnimeResponse, HomeResponse, SearchAnimeResponse } from "./model";
+import { HttpStatusCode } from "axios";
 
 export async function getHomeAnimeC(req: Request, res: Response) {
-    try {
-        if (isRefreshTime()) {
-            cache.home.data = await getHomeAnime();
-        }
-        res.json({
-            meta: {
-                on_going_count: cache.home.data.on_going.length,
-                complete_count: cache.home.data.complete.length,
-            },
-            data: cache.home.data
-        } as HomeResponse);
-    } catch (err) {
-        res.status(HttpStatusCode.InternalServerError).send(err);
-    }
+  try {
+    const buffer = await getHomeAnime();
+    res.json({
+      meta: {
+        on_going_count: buffer.on_going.length,
+        complete_count: buffer.complete.length,
+      },
+      data: buffer,
+    } as HomeResponse);
+  } catch (err) {
+    res.status(HttpStatusCode.InternalServerError).send(err);
+  }
 }
 
-function isRefreshTime(): boolean {
-    if (!lastRefresh) {
-        lastRefresh = new Date();
-        return true;
-    }
-    const diff = Math.ceil(Math.abs(new Date().getTime() - lastRefresh.getTime()) / (1000 * 60 * 60));
-    return diff >= 6;
+export async function getCompleteAnimeC(req: Request, res: Response) {
+  try {
+    const page = parseInt((req.query.page as string) || "1");
+    const buffer = await getCompleteAnime(page);
+    res.json({
+      meta: {
+        count: buffer.length,
+        page: page ? parseInt(page.toString()) : 1,
+      },
+      data: buffer,
+    } as ListAnimeResponse);
+  } catch (err) {
+    res.status(HttpStatusCode.InternalServerError).send(err);
+  }
+}
+
+export async function getOnGoingAnimeC(req: Request, res: Response) {
+  try {
+    const page = parseInt((req.query.page as string) || "1");
+    const buffer = await getOnGoingAnime(page);
+    res.json({
+      meta: {
+        count: buffer.length,
+        page: page ? parseInt(page.toString()) : 1,
+      },
+      data: buffer,
+    } as ListAnimeResponse);
+  } catch (err) {
+    res.status(HttpStatusCode.InternalServerError).send(err);
+  }
+}
+
+export async function searchAnimeC(req: Request, res: Response) {
+  try {
+    const query = req.query.q as string;
+    const buffer = await searchAnime(query);
+    res.json({
+      meta: {
+        count: buffer.length,
+        query,
+      },
+      data: buffer,
+    } as SearchAnimeResponse);
+  } catch (err) {
+    res.status(HttpStatusCode.InternalServerError).send(err);
+  }
 }
