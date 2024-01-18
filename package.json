@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "tailwind -i src/public/index.css -o src/public/style.css -w | nodemon",
+    "dev": "tailwind -i public/index.css -o public/style.css -w | nodemon",
     "build": "tsc && cp -r src/views dist && tailwind -i public/index.css -o public/style.css",
     "start": "node dist/index.js"
   },
