@@ -1,0 +1,34 @@
+<div class="flex w-full gap-1 px-4 my-2 justify-center">
+  {% if page > 1 %}
+    <a href="/complete?page={{page | minus: 1}}" class="bg-white px-2 py-1 rounded-s-lg">&laquo;Prev</a>
+    <a href="/complete?page=1" class="bg-white px-2 py-1">1</a>
+  {% elsif page == 1 %}
+    <span class="bg-white px-2 py-1 rounded-s-lg underline">1</span>
+  {% endif %}
+  {% for i in pages %}
+    {% if i == page %}
+      <span class="bg-white px-2 py-1 underline">{{ i }}</span>
+    {% else %}
+      <a href="/complete?page={{i}}" class="bg-white px-2 py-1">{{ i }}</a>
+    {% endif %}
+  {% endfor %}
+  {% if page >= 11 %}
+    {% if page < beforeLast %}
+      <span class="bg-white px-2 py-1">...</span>
+      <span class="bg-white px-2 py-1 underline">{{ page }}</span>
+      <span class="bg-white px-2 py-1">...</span>
+    {% elsif page < lastPage %}
+      <span class="bg-white px-2 py-1">...</span>
+      <span class="bg-white px-2 py-1 underline">{{ page }}</span>
+    {% endif %}
+  {% else %}
+    <span class="bg-white px-2 py-1">...</span>
+  {% endif %}
+  {% if page < lastPage %}
+    <a href="/complete?page={{lastPage}}" class="bg-white px-2 py-1">{{ lastPage }}</a>
+    <a href="/complete?page={{page | plus: 1}}" class="bg-white px-2 py-1 rounded-e-lg">Next&raquo;</a>
+  {% elsif page == lastPage %}
+    <span class="bg-white px-2 py-1">...</span>
+    <span class="bg-white px-2 py-1 rounded-e-lg underline">{{ lastPage }}</span>
+  {% endif %}
+</div>
