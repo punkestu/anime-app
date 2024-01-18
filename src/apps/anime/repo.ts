@@ -43,7 +43,8 @@ function mapper($: cheerio.Root) {
         : id;
     thumb = thumb ? thumb : $(el).find("img").attr("src") || undefined;
     link = link ? link : `/detail/${id}` || undefined;
-    status = $(el).find(".set").eq(1).text().replace("Status : ", "") || undefined;
+    status =
+      $(el).find(".set").eq(1).text().replace("Status : ", "") || undefined;
     genre_list = $(el)
       .find(".set")
       .find("a")
@@ -120,11 +121,13 @@ export async function getHomeAnime(): Promise<HomeAnime> {
     });
 }
 
-export async function getCompleteAnime(page: number): Promise<Anime[]> {
+export async function getCompleteAnime(
+  page: number
+): Promise<{ animeList: Anime[]; lastPage: number }> {
   if (!process.env.BASE_URL) {
     throw new Error("base url not provided");
   }
-  const buffer: Anime[] = await axios
+  const buffer: { animeList: Anime[]; lastPage: number } = await axios
     .get(
       `${process.env.BASE_URL}complete-anime/${page > 1 ? `page/${page}` : ""}`
     )
@@ -137,7 +140,9 @@ export async function getCompleteAnime(page: number): Promise<Anime[]> {
         .find("ul > li")
         .map(mapper($))
         .get();
-      return animeList;
+      const pages = $(".pagenavix").find(".page-numbers:not(.next):not(.prev)");
+      const lastPage = parseInt(pages.last().html() || "");
+      return { animeList, lastPage };
     })
     .catch((err) => {
       console.log(err.message);
@@ -146,11 +151,13 @@ export async function getCompleteAnime(page: number): Promise<Anime[]> {
   return buffer;
 }
 
-export async function getOnGoingAnime(page: number): Promise<Anime[]> {
+export async function getOnGoingAnime(
+  page: number
+): Promise<{ animeList: Anime[]; lastPage: number }> {
   if (!process.env.BASE_URL) {
     throw new Error("base url not provided");
   }
-  const buffer: Anime[] = await axios
+  const buffer: { animeList: Anime[]; lastPage: number } = await axios
     .get(
       `${process.env.BASE_URL}ongoing-anime/${page > 1 ? `page/${page}` : ""}`
     )
@@ -163,7 +170,9 @@ export async function getOnGoingAnime(page: number): Promise<Anime[]> {
         .find("ul > li")
         .map(mapper($))
         .get();
-      return animeList;
+      const pages = $(".pagenavix").find(".page-numbers:not(.next):not(.prev)");
+      const lastPage = parseInt(pages.last().html() || "");
+      return { animeList, lastPage };
     })
     .catch((err) => {
       throw new Error(err.message);
