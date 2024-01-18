@@ -141,7 +141,7 @@ export async function getCompleteAnime(
         .map(mapper($))
         .get();
       const pages = $(".pagenavix").find(".page-numbers:not(.next):not(.prev)");
-      const lastPage = parseInt(pages.last().html() || "");
+      const lastPage = parseInt(pages.last().html() || "-1");
       return { animeList, lastPage };
     })
     .catch((err) => {

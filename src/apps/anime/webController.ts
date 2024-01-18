@@ -35,18 +35,10 @@ export async function Completed(req: Request, res: Response) {
   try {
     const page = parseInt((req.query.page as string) || "1");
     const buffer = await getCompleteAnime(page);
-    let pages: number[] = [];
-    if (buffer.lastPage > 12) {
-      if (page <= 10 || page === buffer.lastPage) {
-        pages = Array.from({ length: 9 }, (_, i) => i + 2);
-      } else if (page < buffer.lastPage - 1) {
-        pages = Array.from({ length: 7 }, (_, i) => i + 2);
-      } else if (page == buffer.lastPage - 1) {
-        pages = Array.from({ length: 8 }, (_, i) => i + 2);
-      }
-    }else{
-      pages = Array.from({length: buffer.lastPage - 2}, (_, i) => i + 2);
+    if (buffer.lastPage === -1) {
+      return res.redirect(`/`);
     }
+    let pages: number[] = genPages(page, buffer.lastPage);
     res.render("completed", {
       meta: {
         page,
@@ -59,4 +51,39 @@ export async function Completed(req: Request, res: Response) {
   } catch (err) {
     res.render("error", { message: err as string });
   }
+}
+
+export async function OnGoing(req: Request, res: Response) {
+  try {
+    const page = parseInt((req.query.page as string) || "1");
+    const buffer = await getOnGoingAnime(page);
+    if (buffer.lastPage === -1) {
+      return res.redirect(`/`);
+    }
+    let pages: number[] = genPages(page, buffer.lastPage);
+    res.render("ongoing", {
+      meta: {
+        page: page <= buffer.lastPage ? page : buffer.lastPage,
+        lastPage: buffer.lastPage,
+        beforeLast: buffer.lastPage - 1,
+        pages,
+      },
+      data: buffer.animeList,
+    });
+  } catch (err) {
+    res.render("error", { message: err as string });
+  }
+}
+
+function genPages(page: number, lastPage: number) {
+  if (lastPage > 12) {
+    if (page <= 10 || page === lastPage) {
+      return Array.from({ length: 9 }, (_, i) => i + 2);
+    } else if (page < lastPage - 1) {
+      return Array.from({ length: 7 }, (_, i) => i + 2);
+    } else if (page == lastPage - 1) {
+      return Array.from({ length: 8 }, (_, i) => i + 2);
+    }
+  }
+  return Array.from({ length: lastPage - 2 }, (_, i) => i + 2);
 }
