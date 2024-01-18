@@ -6,6 +6,10 @@ import {Liquid} from "liquidjs";
 import path from "node:path";
 import cors from "cors";
 
+import Config from "../config.json";
+process.env.BASE_URL = Config.base_url;
+
+
 const app = Express();
 const engine = new Liquid();
 
@@ -22,7 +26,7 @@ app.use(Express.json());
 app.use("/", WebRoute);
 app.use("/api/v1/", APIRouteV1);
 app.use("/static", StaticRoute);
-app.use("/public", Express.static(path.join(__dirname, "/../../public")));
+app.use("/public", Express.static(path.join(__dirname, "/../public")));
 // region
 
 export default app;
