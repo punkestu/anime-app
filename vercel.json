@@ -4,6 +4,10 @@
     {
       "src": "/",
       "dest": "dist/index.js"
+    },
+    {
+      "src": "/public/(.*)",
+      "dest": "public/$1"
     }
   ]
 }

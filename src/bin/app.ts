@@ -22,7 +22,7 @@ app.use(Express.json());
 app.use("/", WebRoute);
 app.use("/api/v1/", APIRouteV1);
 app.use("/static", StaticRoute);
-app.use("/public", Express.static(path.join(__dirname, "/../public")));
+app.use("/public", Express.static(path.join(__dirname, "/../../public")));
 // region
 
 export default app;
