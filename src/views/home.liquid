@@ -14,7 +14,7 @@
       <div class="flex w-full flex-wrap px-2">
         {% for anime in buffer.complete %}
           <div class="w-1/6 h-52 p-2">
-            <a href="/detail/{{anime.id}}" class="w-full h-full bg-gray-500 relative">
+            <a href="{{anime.link}}" class="w-full h-full bg-gray-500 relative">
               <img
                 class="w-full h-full object-cover"
                 src="{{ anime.thumb }}"
@@ -32,7 +32,7 @@
         </a>
       </div>
     </section>
-    <section id="completed" class="my-4">
+    <section id="ongoing" class="my-4">
       <h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950">On Going</h2>
       <div class="flex w-full flex-wrap px-2">
         {% for anime in buffer.on_going %}

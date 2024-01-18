@@ -25,11 +25,12 @@ function mapper($: cheerio.Root) {
       .each(function (_, el) {
         title = $(el).find(".thumbz > h2").text();
         thumb = $(el).find(".thumbz > img").attr("src") || undefined;
-        link = $(el).attr("href") || undefined;
-        if (!link) {
+        const url = $(el).attr("href") || undefined;
+        if (!url) {
           id = "-";
         } else {
-          id = link.replace(`${process.env.BASE_URL}anime/`, "");
+          id = url.replace(`${process.env.BASE_URL}anime/`, "");
+          link = `/detail/${id}`;
         }
       });
     title = title === "" ? $(el).find("h2").text() || "-" : title;
@@ -41,7 +42,7 @@ function mapper($: cheerio.Root) {
             ?.replace(`${process.env.BASE_URL}anime/`, "") || "-"
         : id;
     thumb = thumb ? thumb : $(el).find("img").attr("src") || undefined;
-    link = link ? link : $(el).find("h2 > a").attr("href") || undefined;
+    link = link ? link : `/detail/${id}` || undefined;
     status = $(el).find(".set").eq(1).text().replace("Status : ", "") || undefined;
     genre_list = $(el)
       .find(".set")

@@ -29,7 +29,7 @@
       <section class="my-2">
         <div class="flex flex-col items-center gap-2">
           {% for episode in buffer.episode_list %}
-            <a href="/watch/{{episode.id}}" class="w-1/2 text-center bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded-xl">{{ episode.title }}</a>
+            <a href="{{episode.link}}" class="w-1/2 text-center bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded-xl">{{ episode.title }}</a>
           {% endfor %}
         </div>
       </section>
