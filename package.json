@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tailwind -i src/public/index.css -o src/public/style.css -w | nodemon",
-    "build": "tsc && tailwind -i src/public/index.css -o src/public/style.css && cp src/public dist && cp src/views dist",
+    "build": "tsc && tailwind -i src/public/index.css -o src/public/style.css && cp -rf src/public dist && cp -rf src/views dist",
     "start": "node dist/index.js",
     "vercel-build": "npm run build"
   },
