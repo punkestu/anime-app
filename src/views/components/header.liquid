@@ -1,0 +1,16 @@
+<header class="w-full flex flex-col lg:flex-row items-center lg:justify-between bg-gray-950 p-4">
+  <a href="/" class="font-bold text-2xl text-white">AnimeSource</a>
+  <form
+    action="/search"
+    method="get"
+    class="w-full lg:w-auto flex flex-wrap justify-center">
+    <label for="q" class="hidden sm:block px-4 py-1 bg-slate-100 rounded-s-md">Search</label>
+    <input
+      name="q"
+      id="q"
+      type="text"
+      class="px-4 py-1 rounded-md sm:rounded-none sm:rounded-e-md flex-grow text-center lg:text-left border-2"
+      placeholder="Search..."
+      value="{{q}}">
+  </form>
+</header>

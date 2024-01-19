@@ -8,52 +8,20 @@
     <title>Home</title>
   </head>
   <body class="bg-gray-900">
-    {% render 'header.liquid' %}
+    {% render 'components/header.liquid' %}
     <section id="completed" class="my-4">
-      <h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950">Completed</h2>
-      <div class="flex w-full flex-wrap px-2">
-        {% for anime in buffer.complete %}
-          <div class="w-1/6 h-52 p-2">
-            <a href="{{anime.link}}" class="w-full h-full bg-gray-500 relative">
-              <img
-                class="w-full h-full object-cover"
-                src="{{ anime.thumb }}"
-                alt="">
-              <div class="shade absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-0 hover:bg-opacity-70 transition duration-200 ease-in-out group flex justify-center items-center">
-                <h3 class="text-center text-white font-medium absolute opacity-0 group-hover:opacity-100 transition duration-200 ease-in-out">{{ anime.title }}</h3>
-              </div>
-            </a>
-          </div>
-        {% endfor %}
-        <a href="/complete" class="w-1/6 h-52 p-2">
-          <div class="w-full h-full bg-gray-500 flex items-center justify-center text-white font-medium text-xl">
-            More
-          </div>
-        </a>
-      </div>
+      {% render "components/animeList.liquid"
+        , head: "Complete"
+        , animeList: buffer.complete
+        , more: true
+        , url: "/complete" %}
     </section>
     <section id="ongoing" class="my-4">
-      <h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950">On Going</h2>
-      <div class="flex w-full flex-wrap px-2">
-        {% for anime in buffer.on_going %}
-          <div class="w-1/6 h-52 p-2">
-            <a href="/detail/{{anime.id}}" class="w-full h-full bg-gray-500 relative">
-              <img
-                class="w-full h-full object-cover"
-                src="{{ anime.thumb }}"
-                alt="">
-              <div class="shade absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-0 hover:bg-opacity-70 transition duration-200 ease-in-out group flex justify-center items-center p-2">
-                <h3 class="text-center text-white font-medium absolute opacity-0 group-hover:opacity-100 transition duration-200 ease-in-out">{{ anime.title }}</h3>
-              </div>
-            </a>
-          </div>
-        {% endfor %}
-        <a href="/ongoing" class="w-1/6 h-52 p-2">
-          <div class="w-full h-full bg-gray-500 flex items-center justify-center text-white font-medium text-xl">
-            More
-          </div>
-        </a>
-      </div>
+      {% render "components/animeList.liquid"
+        , head: "On Going"
+        , animeList: buffer.on_going
+        , more: true
+        , url: "/ongoing" %}
     </section>
   </body>
 </html>

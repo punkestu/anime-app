@@ -1,4 +1,17 @@
-<div class="flex w-full gap-1 px-4 my-2 justify-center">
+<div class="flex md:hidden w-full gap-1 px-4 my-2 justify-center">
+  {% if page > 1 %}
+    <a href="{{baseUrl}}?page={{page | minus: 1}}" class="bg-white px-2 py-1 rounded-s-lg">&laquo;Prev</a>
+  {% else %}
+    <span class="bg-white px-2 py-1 rounded-s-lg">&laquo;Prev</span>
+  {% endif %}
+  <span class="bg-white px-2 py-1 underline">{{ page }}</span>
+  {% if page < lastPage %}
+    <a href="{{baseUrl}}?page={{page | plus: 1}}" class="bg-white px-2 py-1 rounded-e-lg">Next&raquo;</a>
+  {% elsif page == lastPage %}
+    <span class="bg-white px-2 py-1 rounded-e-lg">Next&raquo;</span>
+  {% endif %}
+</div>
+<div class="hidden md:flex w-full gap-1 px-4 my-2 justify-center">
   {% if page > 1 %}
     <a href="{{baseUrl}}?page={{page | minus: 1}}" class="bg-white px-2 py-1 rounded-s-lg">&laquo;Prev</a>
     <a href="{{baseUrl}}?page=1" class="bg-white px-2 py-1">1</a>
