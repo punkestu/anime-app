@@ -1,0 +1,18 @@
+{% layout '../layout/main.liquid' %}
+{% block page %}Home{% endblock %}
+{% block body %}
+  <section id="completed" class="my-4">
+    {% render "components/animeList.liquid"
+      , head: "Complete"
+      , animeList: buffer.complete
+      , more: true
+      , url: "/complete" %}
+  </section>
+  <section id="ongoing" class="my-4">
+    {% render "components/animeList.liquid"
+      , head: "On Going"
+      , animeList: buffer.on_going
+      , more: true
+      , url: "/ongoing" %}
+  </section>
+{% endblock %}

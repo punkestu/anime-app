@@ -1,0 +1,15 @@
+{% layout '../layout/main.liquid' %}
+{% block page %}On Going{% endblock %}
+{% block body %}
+    <section id="ongoing" class="my-4">
+      {% render "components/animeList.liquid"
+        , head: "On Going"
+        , animeList: data %}
+    </section>
+    {% render "components/page.liquid"
+      , page: meta.page
+      , pages: meta.pages
+      , beforeLast: meta.beforeLast
+      , lastPage: meta.lastPage
+      , baseUrl: "/ongoing" %}
+{% endblock %}

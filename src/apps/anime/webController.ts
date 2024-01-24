@@ -9,9 +9,9 @@ import {
 export async function Home(_: Request, res: Response) {
   try {
     const buffer = await getHomeAnime();
-    res.render("home", { buffer });
+    res.render("pages/home", { buffer });
   } catch (err: any) {
-    res.render("error", { message: err as string });
+    res.render("pages/error", { message: err as string });
   }
 }
 
@@ -19,7 +19,7 @@ export async function Search(req: Request, res: Response) {
   try {
     const query = req.query.q as string;
     const buffer = await searchAnime(query);
-    res.render("search", {
+    res.render("pages/search", {
       meta: {
         count: buffer.length,
         query,
@@ -27,7 +27,7 @@ export async function Search(req: Request, res: Response) {
       data: buffer,
     });
   } catch (err) {
-    res.render("error", { message: err as string });
+    res.render("pages/error", { message: err as string });
   }
 }
 
@@ -39,7 +39,7 @@ export async function Completed(req: Request, res: Response) {
       return res.redirect(`/`);
     }
     let pages: number[] = genPages(page, buffer.lastPage);
-    res.render("completed", {
+    res.render("pages/completed", {
       meta: {
         page,
         lastPage: buffer.lastPage,
@@ -49,7 +49,7 @@ export async function Completed(req: Request, res: Response) {
       data: buffer.animeList,
     });
   } catch (err) {
-    res.render("error", { message: err as string });
+    res.render("pages/error", { message: err as string });
   }
 }
 
@@ -61,7 +61,7 @@ export async function OnGoing(req: Request, res: Response) {
       return res.redirect(`/`);
     }
     let pages: number[] = genPages(page, buffer.lastPage);
-    res.render("ongoing", {
+    res.render("pages/ongoing", {
       meta: {
         page: page <= buffer.lastPage ? page : buffer.lastPage,
         lastPage: buffer.lastPage,
@@ -71,7 +71,7 @@ export async function OnGoing(req: Request, res: Response) {
       data: buffer.animeList,
     });
   } catch (err) {
-    res.render("error", { message: err as string });
+    res.render("pages/error", { message: err as string });
   }
 }
 

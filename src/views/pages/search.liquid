@@ -1,0 +1,14 @@
+{% layout '../layout/main.liquid'
+  , customHeader: true %}
+{% block page %}
+  {{ meta.query }}{% endblock %}
+{% block body %}
+  {% render 'components/header.liquid'
+    , q: meta.query %}
+  <section id="search" class="my-4">
+    {% assign head = "Result for: '" | append: meta.query | append: "'" %}
+    {% render "components/animeList.liquid"
+      , head: head
+      , animeList: data %}
+  </section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% layout '../layout/main.liquid' %}
+{% block page %}
+  {{ buffer.title }}{% endblock %}
+{% block body %}
+  <section class="my-4">
+    <h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950 text-center">{{ buffer.title }}</h2>
+    <section class="flex flex-col gap-2 items-center mx-4 my-2">
+      <img
+        src="{{buffer.thumb}}"
+        class="object-cover"
+        alt="">
+      <div class="flex flex-wrap justify-center gap-2 lg:w-1/4">
+        {% for genre in buffer.genre %}
+          <a class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded-xl" href="#">{{ genre }}</a>
+        {% endfor %}
+      </div>
+      <p class="text-white lg:w-1/2 text-center">{{ buffer.producer }}</p>
+      <p class="text-white lg:w-1/2 text-center">{{ buffer.score }}/10</p>
+      <p class="text-white lg:w-1/2 text-center">{{ buffer.synopsis }}</p>
+    </section>
+    <h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950 text-center">Episode</h2>
+    <section class="my-2">
+      <div class="flex flex-col items-center gap-2 px-2">
+        {% for episode in buffer.episode_list %}
+          <a href="{{episode.link}}" class="w-full lg:w-1/2 text-center bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded-xl">{{ episode.title }}</a>
+        {% endfor %}
+      </div>
+    </section>
+  </section>
+{% endblock %}
