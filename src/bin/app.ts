@@ -6,6 +6,10 @@ import {Liquid} from "liquidjs";
 import path from "node:path";
 import cors from "cors";
 
+import Config from "../config.json";
+process.env.BASE_URL = Config.base_url;
+
+
 const app = Express();
 const engine = new Liquid();
 
@@ -17,6 +21,7 @@ app.set('view engine', 'liquid');
 // region: default middleware
 app.use(cors());
 app.use(Express.json());
+app.use(Express.urlencoded({ extended: true }));
 // region
 // region: routes
 app.use("/", WebRoute);

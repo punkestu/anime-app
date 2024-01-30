@@ -52,14 +52,14 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
         "#venkonten > div.venser > div:nth-child(8) > ul > li"
       )
         .map((_, el) => {
+          const id = $(el)
+          .find("span > a")
+          .attr("href")
+          ?.replace("https://otakudesu.media/episode/", "") || "-";
           return {
-            id:
-              $(el)
-                .find("span > a")
-                .attr("href")
-                ?.replace("https://otakudesu.media/episode/", "") || "-",
+            id,
             title: $(el).find("span > a").text(),
-            link: $(el).find("span > a").attr("href"),
+            link: `/watch/${id}`,
           };
         })
         .get();

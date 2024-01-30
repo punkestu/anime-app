@@ -36,6 +36,7 @@ export interface ListAnimeResponse {
   meta: {
     count: number;
     page: number;
+    lastPage: number;
   };
   data: Anime[];
 }

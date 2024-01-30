@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/public/style.css">
+    <title>AnimeSource | {{ title }}</title>
+  </head>
+  <body class="bg-gray-900 h-screen">
+    {% render 'components/header.liquid' %}
+    <section class="my-2 mx-2 h-[50vw] bg-gray-800">
+      <iframe
+        class="w-full h-full"
+        src="{{url}}"
+        frameborder="0"
+        onload="close()"
+        allow="cors"
+        allowfullscreen="true"></iframe>
+    </section>
+    <div class="m-2 flex flex-col md:flex-row p-2 justify-between items-start gap-2 bg-gray-950">
+      <h2 class="text-white text-xl font-bold md:w-2/3 text-center md:text-start">{{ title }}</h2>
+      <div class="mx-auto md:mx-0">
+        {% if pen.prev == null %}
+          <span class="text-center bg-white rounded-s-lg px-2 py-1 cursor-not-allowed">&laquo;Prev</span>
+        {% else %}
+          <a href="{{pen.prev}}" class="text-center bg-white rounded-s-lg px-2 py-1">&laquo;Prev</a>
+        {% endif %}
+        <a href="{{pen.episode}}" class="text-center bg-white px-2 py-1">Episode</a>
+        {% if pen.next == null %}
+          <span class="text-center bg-white rounded-e-lg px-2 py-1 cursor-not-allowed">Next&raquo;</span>
+        {% else %}
+          <a href="{{pen.next}}" class="text-center bg-white rounded-e-lg px-2 py-1">Next&raquo;</a>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+  <script>
+      function close(){
+            setInterval(()=>{
+                  document.querySelector("div.close-button").click();
+            }, 1000);
+      }
+  </script>
+</html>

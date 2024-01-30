@@ -29,10 +29,11 @@ export async function getCompleteAnimeC(req: Request, res: Response) {
     const buffer = await getCompleteAnime(page);
     res.json({
       meta: {
-        count: buffer.length,
+        count: buffer.animeList.length,
         page: page ? parseInt(page.toString()) : 1,
+        lastPage: buffer.lastPage || -1,
       },
-      data: buffer,
+      data: buffer.animeList,
     } as ListAnimeResponse);
   } catch (err) {
     res.status(HttpStatusCode.InternalServerError).send(err);
@@ -45,10 +46,11 @@ export async function getOnGoingAnimeC(req: Request, res: Response) {
     const buffer = await getOnGoingAnime(page);
     res.json({
       meta: {
-        count: buffer.length,
+        count: buffer.animeList.length,
         page: page ? parseInt(page.toString()) : 1,
+        lastPage: buffer.lastPage || -1,
       },
-      data: buffer,
+      data: buffer.animeList,
     } as ListAnimeResponse);
   } catch (err) {
     res.status(HttpStatusCode.InternalServerError).send(err);

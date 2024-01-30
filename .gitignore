@@ -2,3 +2,6 @@ node_modules/
 dist/
 src/public/style.css
 .idea
+.vercel
+public/style.css
+serverless

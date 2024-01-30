@@ -1,0 +1,15 @@
+{% layout '../layout/main.liquid' %}
+{% block page %}Completed{% endblock %}
+{% block body %}
+    <section id="search" class="my-4">
+      {% render "components/animeList.liquid"
+        , head: "Complete"
+        , animeList: data %}
+    </section>
+    {% render "components/page.liquid"
+      , page: meta.page
+      , pages: meta.pages
+      , beforeLast: meta.beforeLast
+      , lastPage: meta.lastPage
+      , baseUrl: "/complete" %}
+{% endblock %}

@@ -25,11 +25,12 @@ function mapper($: cheerio.Root) {
       .each(function (_, el) {
         title = $(el).find(".thumbz > h2").text();
         thumb = $(el).find(".thumbz > img").attr("src") || undefined;
-        link = $(el).attr("href") || undefined;
-        if (!link) {
+        const url = $(el).attr("href") || undefined;
+        if (!url) {
           id = "-";
         } else {
-          id = link.replace(`${process.env.BASE_URL}anime/`, "");
+          id = url.replace(`${process.env.BASE_URL}anime/`, "");
+          link = `/detail/${id}`;
         }
       });
     title = title === "" ? $(el).find("h2").text() || "-" : title;
@@ -41,8 +42,9 @@ function mapper($: cheerio.Root) {
             ?.replace(`${process.env.BASE_URL}anime/`, "") || "-"
         : id;
     thumb = thumb ? thumb : $(el).find("img").attr("src") || undefined;
-    link = link ? link : $(el).find("h2 > a").attr("href") || undefined;
-    status = $(el).find(".set").eq(1).text().replace("Status : ", "") || undefined;
+    link = link ? link : `/detail/${id}` || undefined;
+    status =
+      $(el).find(".set").eq(1).text().replace("Status : ", "") || undefined;
     genre_list = $(el)
       .find(".set")
       .find("a")
@@ -119,11 +121,13 @@ export async function getHomeAnime(): Promise<HomeAnime> {
     });
 }
 
-export async function getCompleteAnime(page: number): Promise<Anime[]> {
+export async function getCompleteAnime(
+  page: number
+): Promise<{ animeList: Anime[]; lastPage: number }> {
   if (!process.env.BASE_URL) {
     throw new Error("base url not provided");
   }
-  const buffer: Anime[] = await axios
+  const buffer: { animeList: Anime[]; lastPage: number } = await axios
     .get(
       `${process.env.BASE_URL}complete-anime/${page > 1 ? `page/${page}` : ""}`
     )
@@ -136,7 +140,9 @@ export async function getCompleteAnime(page: number): Promise<Anime[]> {
         .find("ul > li")
         .map(mapper($))
         .get();
-      return animeList;
+      const pages = $(".pagenavix").find(".page-numbers:not(.next):not(.prev)");
+      const lastPage = parseInt(pages.last().html() || "-1");
+      return { animeList, lastPage };
     })
     .catch((err) => {
       console.log(err.message);
@@ -145,11 +151,13 @@ export async function getCompleteAnime(page: number): Promise<Anime[]> {
   return buffer;
 }
 
-export async function getOnGoingAnime(page: number): Promise<Anime[]> {
+export async function getOnGoingAnime(
+  page: number
+): Promise<{ animeList: Anime[]; lastPage: number }> {
   if (!process.env.BASE_URL) {
     throw new Error("base url not provided");
   }
-  const buffer: Anime[] = await axios
+  const buffer: { animeList: Anime[]; lastPage: number } = await axios
     .get(
       `${process.env.BASE_URL}ongoing-anime/${page > 1 ? `page/${page}` : ""}`
     )
@@ -162,7 +170,9 @@ export async function getOnGoingAnime(page: number): Promise<Anime[]> {
         .find("ul > li")
         .map(mapper($))
         .get();
-      return animeList;
+      const pages = $(".pagenavix").find(".page-numbers:not(.next):not(.prev)");
+      const lastPage = parseInt(pages.last().html() || "");
+      return { animeList, lastPage };
     })
     .catch((err) => {
       throw new Error(err.message);

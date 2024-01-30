@@ -1,0 +1,24 @@
+<h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950">{{ head }}</h2>
+<div class="flex w-full flex-wrap px-2">
+  {% if animeList.size == 0 %}
+    Nothing here
+  {% endif %}
+  {% for anime in animeList %}
+    <div class="w-1/2 md:w-1/3 lg:w-1/6 h-52 p-2">
+      <div class="w-full h-full relative">
+        <div class="absolute -z-50 top-0 left-0 animate-pulse w-full h-full bg-gray-500"></div>
+        <img
+          class="w-full h-full object-cover z-50"
+          src="{{ anime.thumb }}"
+          alt="">
+        <a href="{{anime.link}}" class="shade absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-70 lg:bg-opacity-0 hover:bg-opacity-70 transition duration-200 ease-in-out group flex justify-center items-center">
+          <h3 class="text-center text-white font-medium absolute lg:opacity-0 group-hover:opacity-100 transition duration-200 ease-in-out">{{ anime.title }}</h3>
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+  {% if more %}
+    {% render "components/moreButton.liquid"
+      , url: url %}
+  {% endif %}
+</div>

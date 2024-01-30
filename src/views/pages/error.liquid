@@ -1,0 +1,8 @@
+{% layout '../layout/main.liquid' %}
+{% block page %}Error{% endblock %}
+{% block body %}
+  <section class="my-4">
+    <h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950 text-center">Error!!!</h2>
+    <p class="text-center my-2 bg-red-500 text-white p-2">{{ message }}</p>
+  </section>
+{% endblock %}

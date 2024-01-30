@@ -1,0 +1,53 @@
+<div class="flex md:hidden w-full gap-1 px-4 my-2 justify-center">
+  {% if page > 1 %}
+    <a href="{{baseUrl}}?page={{page | minus: 1}}" class="bg-white px-2 py-1 rounded-s-lg">&laquo;Prev</a>
+  {% else %}
+    <span class="bg-white px-2 py-1 rounded-s-lg">&laquo;Prev</span>
+  {% endif %}
+  <span class="bg-white px-2 py-1 underline">{{ page }}</span>
+  {% if page < lastPage %}
+    <a href="{{baseUrl}}?page={{page | plus: 1}}" class="bg-white px-2 py-1 rounded-e-lg">Next&raquo;</a>
+  {% elsif page == lastPage %}
+    <span class="bg-white px-2 py-1 rounded-e-lg">Next&raquo;</span>
+  {% endif %}
+</div>
+<div class="hidden md:flex w-full gap-1 px-4 my-2 justify-center">
+  {% if page > 1 %}
+    <a href="{{baseUrl}}?page={{page | minus: 1}}" class="bg-white px-2 py-1 rounded-s-lg">&laquo;Prev</a>
+    <a href="{{baseUrl}}?page=1" class="bg-white px-2 py-1">1</a>
+  {% elsif page == 1 %}
+    <span class="bg-white px-2 py-1 rounded-s-lg">&laquo;Prev</span>
+    <span class="bg-white px-2 py-1 underline">1</span>
+  {% endif %}
+  {% for i in pages %}
+    {% if i == page %}
+      <span class="bg-white px-2 py-1 underline">{{ i }}</span>
+    {% else %}
+      <a href="{{baseUrl}}?page={{i}}" class="bg-white px-2 py-1">{{ i }}</a>
+    {% endif %}
+  {% endfor %}
+  {% if lastPage > 12 %}
+    {% if page >= 11 %}
+      {% if page < beforeLast %}
+        <span class="bg-white px-2 py-1">...</span>
+        <span class="bg-white px-2 py-1 underline">{{ page }}</span>
+        <span class="bg-white px-2 py-1">...</span>
+      {% elsif page < lastPage %}
+        <span class="bg-white px-2 py-1">...</span>
+        <span class="bg-white px-2 py-1 underline">{{ page }}</span>
+      {% endif %}
+    {% else %}
+      <span class="bg-white px-2 py-1">...</span>
+    {% endif %}
+  {% endif %}
+  {% if page < lastPage %}
+    <a href="{{baseUrl}}?page={{lastPage}}" class="bg-white px-2 py-1">{{ lastPage }}</a>
+    <a href="{{baseUrl}}?page={{page | plus: 1}}" class="bg-white px-2 py-1 rounded-e-lg">Next&raquo;</a>
+  {% elsif page == lastPage %}
+    {% if lastPage > 12 %}
+      <span class="bg-white px-2 py-1">...</span>
+    {% endif %}
+    <span class="bg-white px-2 py-1 underline">{{ lastPage }}</span>
+    <span class="bg-white px-2 py-1 rounded-e-lg">Next&raquo;</span>
+  {% endif %}
+</div>
