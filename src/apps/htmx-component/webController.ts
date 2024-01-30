@@ -11,15 +11,20 @@ export function sendAnimeList(req: Request, res: Response) {
   const animeListParsed =
     typeof animeList === "string"
       ? [JSON.parse(animeList)]
-      : animeList
-          .map(
-            (anime: string) =>
-              JSON.parse(anime) as {
-                title: string;
-                id: string;
-                thumb: string;
-              }
-          );
+      : animeList.map(
+          (anime: string) =>
+            JSON.parse(anime) as {
+              title: string;
+              id: string;
+              thumb: string;
+            }
+        );
+  if (req.query.full === "true") {
+    return res.render("components/animeList", {
+      head: "Recently Watch",
+      animeList: animeListParsed,
+    });
+  }
   res.render("components/animeList", {
     head: "Recently Watch",
     animeList: animeListParsed.slice(0, 5),
