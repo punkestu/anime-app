@@ -1,11 +1,8 @@
 import axios from "axios";
-import { Anime, Episode } from "./model";
+import { AnimeDetail, Episode } from "./model";
 import cheerio from "cheerio";
-import kv from "../../utils/kv";
 
-export async function getAnimeDetail(id: string): Promise<Anime> {
-  const detail = await kv.get<Anime>(`${id}:detail`);
-  if (detail) return detail;
+export async function getAnimeDetail(id: string): Promise<AnimeDetail> {
   return axios
     .get(`${process.env.BASE_URL}anime/${id}`)
     .then((response) => {
@@ -69,7 +66,7 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
           };
         })
         .get();
-      const newAnime = new Anime(
+      const newAnime = new AnimeDetail(
         id,
         title,
         thumb,
@@ -79,7 +76,6 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
         episode_list,
         genre_list
       );
-      kv.set(`${id}:detail`, newAnime).then();
       return newAnime;
     });
 }

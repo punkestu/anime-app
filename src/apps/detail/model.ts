@@ -1,4 +1,4 @@
-export class Anime {
+export class AnimeDetail {
   constructor(
     public id: string,
     public title: string,
@@ -11,6 +11,17 @@ export class Anime {
   ) {}
 }
 
+export interface Anime {
+  synopsis: string;
+  score: number;
+  producer: string;
+}
+
+export interface AnimeDisplay {
+  title: string;
+  thumb: string;
+}
+
 export interface Episode {
   id: string;
   title: string;
@@ -21,5 +32,5 @@ export interface AnimeDetailResponse {
   meta: {
     episode_count: number;
   };
-  data: Anime;
+  data: AnimeDetail;
 }
