@@ -75,6 +75,10 @@ export async function OnGoing(req: Request, res: Response) {
   }
 }
 
+export function getRecently(req: Request, res: Response) {
+  res.render("pages/recently");
+}
+
 function genPages(page: number, lastPage: number) {
   if (lastPage > 12) {
     if (page <= 10 || page === lastPage) {

@@ -29,6 +29,11 @@
   </section>
   <script src="/public/localstorage.js"></script>
   <script>
-    addCurrentlyWatch("{{buffer.id}}");
+    addCurrentlyWatch({
+      id: "{{buffer.id}}",
+      link: window.location.pathname,
+      title: "{{buffer.title}}",
+      thumb: "{{buffer.thumb}}",
+    });
   </script>
 {% endblock %}
