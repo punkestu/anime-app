@@ -5,3 +5,4 @@ src/public/style.css
 .vercel
 public/style.css
 serverless
+.env

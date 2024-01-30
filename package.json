@@ -20,11 +20,12 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
     "@types/cheerio": "^0.22.35",
+    "@types/cors": "^2.8.17",
     "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
     "@types/http-errors": "^2.0.4",
+    "@vercel/kv": "^1.0.1",
     "axios": "^1.6.5",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
