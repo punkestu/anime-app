@@ -19,11 +19,10 @@ export function sendAnimeList(req: Request, res: Response) {
                 id: string;
                 thumb: string;
               }
-          )
-          .slice(0, 5);
+          );
   res.render("components/animeList", {
     head: "Recently Watch",
-    animeList: animeListParsed,
+    animeList: animeListParsed.slice(0, 5),
     more: animeListParsed.length > 5,
     url: "/recently",
   });
