@@ -1,5 +1,8 @@
 <h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950">{{ head }}</h2>
 <div class="flex w-full flex-wrap px-2">
+  {% if animeList.size == 0 %}
+    <h2 class="text-white p-2 font-semibold">Nothing here 😢️</h2>
+  {% endif %}
   {% for anime in animeList %}
     <div class="w-1/2 md:w-1/3 lg:w-1/6 h-52 p-2">
       <div class="w-full h-full relative">
