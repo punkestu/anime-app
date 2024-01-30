@@ -1,8 +1,11 @@
 import axios from "axios";
 import { Anime, Episode } from "./model";
 import cheerio from "cheerio";
+import kv from "../../utils/kv";
 
 export async function getAnimeDetail(id: string): Promise<Anime> {
+  const detail = await kv.get<Anime>(`${id}:detail`);
+  if (detail) return detail;
   return axios
     .get(`${process.env.BASE_URL}anime/${id}`)
     .then((response) => {
@@ -46,16 +49,19 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
           (_, el) =>
             $(el)
               .attr("href")
-              ?.replace("https://otakudesu.media/genres/", "").slice(0, -1) || "-"
-        ).get();
+              ?.replace("https://otakudesu.media/genres/", "")
+              .slice(0, -1) || "-"
+        )
+        .get();
       const episode_list: Episode[] = $(
         "#venkonten > div.venser > div:nth-child(8) > ul > li"
       )
         .map((_, el) => {
-          const id = $(el)
-          .find("span > a")
-          .attr("href")
-          ?.replace("https://otakudesu.media/episode/", "") || "-";
+          const id =
+            $(el)
+              .find("span > a")
+              .attr("href")
+              ?.replace("https://otakudesu.media/episode/", "") || "-";
           return {
             id,
             title: $(el).find("span > a").text(),
@@ -63,7 +69,7 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
           };
         })
         .get();
-      return new Anime(
+      const newAnime = new Anime(
         id,
         title,
         thumb,
@@ -73,5 +79,7 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
         episode_list,
         genre_list
       );
+      kv.set(`${id}:detail`, newAnime).then();
+      return newAnime;
     });
 }
