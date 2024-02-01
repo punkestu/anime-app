@@ -1,0 +1,17 @@
+{% layout '../layout/main.liquid' %}
+{% block page %}{{genre | capitalize}}{% endblock %}
+{% block body %}
+{% assign head = "Genre " | append: genre %}
+<section id="search" class="my-4">
+  {% render "components/animeList.liquid"
+  , head: head
+  , animeList: data %}
+</section>
+{% assign baseUrl = "/genre/"| append: genre %}
+{% render "components/page.liquid"
+, page: meta.page
+, pages: meta.pages
+, beforeLast: meta.beforeLast
+, lastPage: meta.lastPage
+, baseUrl: baseUrl %}
+{% endblock %}
