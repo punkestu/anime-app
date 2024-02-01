@@ -17,7 +17,7 @@ export async function getByGenre(req: Request, res: Response) {
         page: page ? parseInt(page as string) : 1,
         lastPage: genrePage.maxPage,
         beforeLast: genrePage.maxPage - 1,
-        pages: genPages(parseInt(page as string), genrePage.maxPage),
+        pages: genPages(page ? parseInt(page as string) : 1, genrePage.maxPage),
       },
       genre,
       data: genrePage.animeList,
