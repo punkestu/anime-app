@@ -1,5 +1,13 @@
 # Anime App
-Anime watch platform. Built with express and typescript. Scrapped from otakudesu.media
+Anime App is an anime streaming platform that get data using scrapped data from a website. I use Typescript as the language and using [Express-boilerplate](https://github.com/punkestu/express-boilerplate) as framework. 
+
+This app was deployed on [vercel](https://vercel.com/) that was a simple and free hobby application deployment.
+
+## Features
+- ***anime*** : serve all main feature for getting anime start from searching, get completed and on going anime, and get recently watched anime
+- ***detail*** : give a detail page of an anime + give you a list of episode of the anime
+- ***episode*** : stream an anime's episode
+- ***genre*** : show list of anime with specific genre
 
 ## Development
 Do nothing and call 
@@ -12,30 +20,3 @@ and then run with
 ```
 npm run start
 ```
-
-## Structure
-```
-src
-├── apps
-│   └── [any app]
-│       ├── controller.ts
-│       ├── repo.ts
-│       ├── route.ts
-│       └── model.ts
-├── bin
-├── public
-├── routes
-│   ├── api
-│   │   ├── v1.ts
-│   │   └── .etc
-│   ├── static.ts
-│   └── web.ts
-├── views
-└── index.ts
-```
-Explanation:
-- ***apps***: will contain all apps folder that will have controller, repo, model and route.
-- ***bin***: will contain main express instance.
-- ***public***: will contain public file such as css, image, .etc.
-- ***routes***: will contain all top level routes and devided into 3 segment: web(for website), api(for api provider), and static(for static file).
-- ***views***: will contain all views, layout, and partials.
