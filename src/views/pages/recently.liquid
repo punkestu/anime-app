@@ -1,15 +1,15 @@
 {% layout '../layout/main.liquid' %}
-{% block page %}Completed{% endblock %}
+{% block page %}Recently Watch{% endblock %}
 {% block body %}
-  <section id="recently" class="my-4" hx-post="/htmx-component/animeList?full=true" hx-trigger="load" hx-swap="innerHtml">
+<section id="recently" class="my-4" hx-post="/htmx-component/animeList?full=true" hx-trigger="load" hx-swap="innerHtml">
     {% render "components/animeList.liquid", head: "Recently Watch", animeList: [] %}
-  </section>
+</section>
 
-  <script src="/static/htmx.js"></script>
-  <script src="/public/localstorage.js"></script>
-  <script>
-    document.getElementById("recently").addEventListener("htmx:configRequest", function(event) {
-      event.detail.parameters['animeList'] = getCurrentlyWatchs();
+<script src="/static/htmx.js"></script>
+<script src="/public/localstorage.js"></script>
+<script>
+    document.getElementById("recently").addEventListener("htmx:configRequest", function (event) {
+        event.detail.parameters['animeList'] = getCurrentlyWatchs();
     });
-  </script>
+</script>
 {% endblock %}
