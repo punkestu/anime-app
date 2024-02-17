@@ -46,7 +46,7 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
           (_, el) =>
             $(el)
               .attr("href")
-              ?.replace("https://otakudesu.media/genres/", "").slice(0, -1) || "-"
+              ?.replace(`${process.env.BASE_URL}genres/`, "").slice(0, -1) || "-"
         ).get();
       const episode_list: Episode[] = $(
         "#venkonten > div.venser > div:nth-child(8) > ul > li"
@@ -55,7 +55,7 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
           const id = $(el)
           .find("span > a")
           .attr("href")
-          ?.replace("https://otakudesu.media/episode/", "") || "-";
+          ?.replace(`${process.env.BASE_URL}episode/`, "") || "-";
           return {
             id,
             title: $(el).find("span > a").text(),

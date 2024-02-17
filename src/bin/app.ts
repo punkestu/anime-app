@@ -6,9 +6,8 @@ import {Liquid} from "liquidjs";
 import path from "node:path";
 import cors from "cors";
 
-import Config from "../config.json";
-process.env.BASE_URL = Config.base_url;
-
+import Config from "../config";
+process.env.BASE_URL = process.env.BASE_URL || Config.base_url;
 
 const app = Express();
 const engine = new Liquid();
