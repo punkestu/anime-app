@@ -7,7 +7,7 @@ export async function getFrame(url: string): Promise<{
   const frameUrl = await fetch(url)
     .then((res) => {
       if (!res.ok) {
-        throw new Error("Failed to fetch");
+        throw new Error(`Failed to fetch | ${res.status} (${res.statusText})`);
       }
       return res.text()
     })
