@@ -12,17 +12,21 @@
 
 <body class="bg-gray-900 h-screen">
   {% render 'components/header.liquid' %}
-  <section class="my-2 mx-2 h-[50vw] bg-gray-800">
-    <iframe id="frame" class="w-full h-full" src="{{url}}" frameborder="0" onload="close()" allow="cors"
-      allowfullscreen="true"></iframe>
+  <section class="my-2 mx-2 h-[45vw] relative">
+    <div class="flex items-center justify-center text-white font-semibold z-0 w-full h-full bg-gray-800 animate-pulse">
+      Loading ...
+    </div>
+    <iframe id="frame" class="absolute top-0 left-0 w-full h-full z-50" src="{{url}}" frameborder="0" onload="close()"
+      allow="cors" allowfullscreen="true"></iframe>
   </section>
   <section class="m-2">
     <select id="quality" class="w-full text-center">
-      {% unless mirrors %}
-      <option value="" disabled selected>Default</option>
-      {% endunless %}
-      {% for q in mirrors.quality, i %}
-      <option value="{{mirrors.url[forloop.index0]}}">{{q}}</option>
+      {% for mirror in mirrors %}
+      <optgroup label="{{mirror.quality}}">
+        {% for m in mirror.mirrors %}
+        <option value="{{m.url}}">{{m.name}}</option>
+        {% endfor %}
+      </optgroup>
       {% endfor %}
     </select>
   </section>

@@ -1,29 +1,17 @@
 import axios from "axios";
 import cheerio from "cheerio";
 
-// export async function getFrame(url: string): Promise<{
-//   url: string | undefined;
-// }> {
-//   const frameUrl = await fetch(url)
-//     .then((res) => {
-//       if (!res.ok) {
-//         throw new Error(`Failed to fetch ${url} | ${res.status} (${res.statusText})`);
-//       }
-//       return res.text()
-//     })
-//     .then((response) => {
-//       const $ = cheerio.load(response);
-//       return $("textarea.form-control.embedcode")
-//         .html()
-//         ?.split("src=")[1]
-//         .split('"')[1];
-//     });
-//   return { url: frameUrl };
-// }
-
 export async function watchAnime(id: string): Promise<{
   url: string | undefined;
-  mirrors: { quality: string[]; url: string[] } | undefined;
+  mirrors:
+    | {
+        quality: string;
+        mirrors: {
+          name: string;
+          url: string | undefined;
+        }[];
+      }[]
+    | undefined;
   pen: {
     prev: string | undefined;
     episode: string | undefined;
@@ -37,28 +25,43 @@ export async function watchAnime(id: string): Promise<{
       const $ = cheerio.load(response.data);
       const fallback = $("#pembed > div > iframe").attr("src");
 
-      const mirrorsQuality = $(".download > ul > li > strong")
+      const mirrorsList = $(".download > ul > li")
         .map((_, el) => {
-          return $(el).html();
-        })
-        .get();
-      const mirrorsUrl = $(".download > ul > li > a")
-        .map((_, el) => {
-          const source = $(el).html();
-          if (source === "Acefile ") {
-            return $(el).attr("href");
-          }
+          const quality = $(el).children("strong").html();
+          const mirrors = $(el)
+            .children("a")
+            .map((_, el) => {
+              const mirror = $(el);
+              if (
+                mirror.html() &&
+                (mirror.html()?.toString().includes("Acefile")) &&
+                mirror.attr("href")
+              ) {
+                return {
+                  name: mirror.html(),
+                  url: mirror.attr("href"),
+                };
+              }
+            })
+            .get();
+          return { quality, mirrors };
         })
         .get();
 
       var url = null;
-      var mirrors = undefined;
-      if (mirrorsUrl.length > 0) {
-        url = mirrorsUrl[0];
-        mirrors = {
-          quality: mirrorsQuality,
-          url: mirrorsUrl,
-        };
+      var mirrors = [];
+      if (mirrorsList.length > 0) {
+        url = mirrorsList[0].mirrors[0].url;
+        mirrorsList.push({
+          quality: "Default",
+          mirrors: [
+            {
+              name: "Default",
+              url: fallback,
+            },
+          ],
+        });
+        mirrors = mirrorsList;
       }
       if (!url) {
         url = fallback;
