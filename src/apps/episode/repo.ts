@@ -1,25 +1,25 @@
 import axios from "axios";
 import cheerio from "cheerio";
 
-export async function getFrame(url: string): Promise<{
-  url: string | undefined;
-}> {
-  const frameUrl = await fetch(url)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`Failed to fetch ${url} | ${res.status} (${res.statusText})`);
-      }
-      return res.text()
-    })
-    .then((response) => {
-      const $ = cheerio.load(response);
-      return $("textarea.form-control.embedcode")
-        .html()
-        ?.split("src=")[1]
-        .split('"')[1];
-    });
-  return { url: frameUrl };
-}
+// export async function getFrame(url: string): Promise<{
+//   url: string | undefined;
+// }> {
+//   const frameUrl = await fetch(url)
+//     .then((res) => {
+//       if (!res.ok) {
+//         throw new Error(`Failed to fetch ${url} | ${res.status} (${res.statusText})`);
+//       }
+//       return res.text()
+//     })
+//     .then((response) => {
+//       const $ = cheerio.load(response);
+//       return $("textarea.form-control.embedcode")
+//         .html()
+//         ?.split("src=")[1]
+//         .split('"')[1];
+//     });
+//   return { url: frameUrl };
+// }
 
 export async function watchAnime(id: string): Promise<{
   url: string | undefined;
@@ -54,13 +54,11 @@ export async function watchAnime(id: string): Promise<{
       var url = null;
       var mirrors = undefined;
       if (mirrorsUrl.length > 0) {
-        await getFrame(mirrorsUrl[0]).then((frame) => {
-          url = frame.url;
-          mirrors = {
-            quality: mirrorsQuality,
-            url: mirrorsUrl.map((url) => url.split("id=")[1]),
-          };
-        });
+        url = mirrorsUrl[0];
+        mirrors = {
+          quality: mirrorsQuality,
+          url: mirrorsUrl,
+        };
       }
       if (!url) {
         url = fallback;

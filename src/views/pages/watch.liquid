@@ -44,8 +44,7 @@
   </div>
   <script>
     document.querySelector("#quality").addEventListener("change", async (e) => {
-      const newFrame = await fetch(`/api/v1/watch/change/${e.target.value}`).then(res => res.json());
-      document.querySelector("#frame").src = newFrame.url;
+      document.querySelector("#frame").src = e.target.value;
     });
   </script>
 </body>
