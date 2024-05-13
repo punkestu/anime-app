@@ -4,13 +4,15 @@ import cheerio from "cheerio";
 export async function getFrame(url: string): Promise<{
   url: string | undefined;
 }> {
-  const frameUrl = await axios.get(url).then((response) => {
-    const $ = cheerio.load(response.data);
-    return $("textarea.form-control.embedcode")
-      .html()
-      ?.split("src=")[1]
-      .split('"')[1];
-  });
+  const frameUrl = await fetch(url)
+    .then((res) => res.text())
+    .then((response) => {
+      const $ = cheerio.load(response);
+      return $("textarea.form-control.embedcode")
+        .html()
+        ?.split("src=")[1]
+        .split('"')[1];
+    });
   return { url: frameUrl };
 }
 
