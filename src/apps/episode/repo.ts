@@ -5,7 +5,12 @@ export async function getFrame(url: string): Promise<{
   url: string | undefined;
 }> {
   const frameUrl = await fetch(url)
-    .then((res) => res.text())
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Failed to fetch");
+      }
+      return res.text()
+    })
     .then((response) => {
       const $ = cheerio.load(response);
       return $("textarea.form-control.embedcode")
