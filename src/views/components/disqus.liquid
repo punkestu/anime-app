@@ -1,0 +1,27 @@
+<div class="mx-2">
+    <button onclick="toggleComment()" class="bg-slate-50 py-1 w-full my-2" id="comment_toggler">Open Comments</button>
+    <div id="disqus_thread" class="hidden"></div>
+</div>
+<script>
+    var isOpen = false;
+    function toggleComment() {
+        if (isOpen) {
+            document.getElementById('disqus_thread').classList.add('hidden');
+            document.getElementById('comment_toggler').innerText = "Open Comments";
+            isOpen = false;
+        }
+        else {
+            document.getElementById('disqus_thread').classList.remove('hidden');
+            document.getElementById('comment_toggler').innerText = "Close Comments";
+            isOpen = true;
+        }
+    }
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://punkestu-anime.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>

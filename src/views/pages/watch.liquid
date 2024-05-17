@@ -46,6 +46,7 @@
       {% endif %}
     </div>
   </div>
+  {% render 'components/disqus.liquid' %}
   <script>
     document.querySelector("#quality").addEventListener("change", async (e) => {
       document.querySelector("#frame").src = e.target.value;
