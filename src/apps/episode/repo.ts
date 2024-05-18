@@ -34,7 +34,7 @@ export async function watchAnime(id: string): Promise<{
               const mirror = $(el);
               if (
                 mirror.html() &&
-                (mirror.html()?.toString().includes("Acefile")) &&
+                mirror.html()?.toString().includes("Acefile") &&
                 mirror.attr("href")
               ) {
                 return {
@@ -51,10 +51,8 @@ export async function watchAnime(id: string): Promise<{
         .get();
 
       var url = null;
-      var mirrors = [];
-      if (mirrorsList.length > 0 && mirrorsList[0].mirrors.length > 0) {
-        url = mirrorsList[0].mirrors[0].url;
-        mirrorsList.push({
+      var mirrors = [
+        {
           quality: "Default",
           mirrors: [
             {
@@ -62,8 +60,11 @@ export async function watchAnime(id: string): Promise<{
               url: fallback,
             },
           ],
-        });
-        mirrors = mirrorsList;
+        },
+      ];
+      if (mirrorsList.length > 0 && mirrorsList[0].mirrors.length > 0) {
+        url = mirrorsList[0].mirrors[0].url;
+        mirrors = [...mirrorsList, ...mirrors];
       }
       if (!url) {
         url = fallback;
