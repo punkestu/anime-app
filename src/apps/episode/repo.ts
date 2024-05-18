@@ -42,7 +42,9 @@ export async function watchAnime(id: string): Promise<{
                   url: mirror.attr("href"),
                 };
               }
+              return null;
             })
+            .filter((_, el) => el !== null)
             .get();
           return { quality, mirrors };
         })
@@ -50,7 +52,7 @@ export async function watchAnime(id: string): Promise<{
 
       var url = null;
       var mirrors = [];
-      if (mirrorsList.length > 0) {
+      if (mirrorsList.length > 0 && mirrorsList[0].mirrors.length > 0) {
         url = mirrorsList[0].mirrors[0].url;
         mirrorsList.push({
           quality: "Default",
