@@ -34,7 +34,8 @@ export async function watchAnime(id: string): Promise<{
               const mirror = $(el);
               if (
                 mirror.html() &&
-                mirror.html()?.toString().includes("Acefile") &&
+                (mirror.html()?.toString().includes("Acefile") ||
+                  mirror.html()?.toString().includes("KFiles")) &&
                 mirror.attr("href")
               ) {
                 return {
