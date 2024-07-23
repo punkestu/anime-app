@@ -6,6 +6,7 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
   return axios
     .get(`${process.env.BASE_URL}anime/${id}`)
     .then((response) => {
+      console.log("pass 1");
       const $ = cheerio.load(response.data);
       return $;
     })
@@ -63,6 +64,7 @@ export async function getAnimeDetail(id: string): Promise<Anime> {
           };
         })
         .get();
+      console.log("success");
       return new Anime(
         id,
         title,

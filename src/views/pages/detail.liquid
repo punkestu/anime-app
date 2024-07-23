@@ -6,6 +6,7 @@
   <h2 class="mx-2 p-2 text-white text-xl font-bold bg-gray-950 text-center">{{ buffer.title }}</h2>
   <section class="flex flex-col gap-2 items-center mx-4 my-2">
     <img src="{{buffer.thumb}}" class="object-cover" alt="">
+    <button class="bg-slate-50 px-2 py-1 rounded-md" id="like-btn">🩶Sukai</button>
     <div class="flex flex-wrap justify-center gap-2 lg:w-1/4">
       {% for genre in buffer.genre %}
       <a class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded-xl" href="/genre/{{genre}}">{{ genre }}</a>
@@ -34,5 +35,28 @@
     title: "{{buffer.title}}",
     thumb: "{{buffer.thumb}}",
   });
+
+  const likeBtn = document.querySelector("#like-btn");
+  function toggleLikeBtn(wasLiked) {
+    if (wasLiked) {
+      likeBtn.textContent = "❤️Disukai";
+    } else {
+      likeBtn.textContent = "🩶Sukai";
+    }
+  }
+  likeBtn.addEventListener("click", () => {
+    if (isLiked("{{buffer.id}}")) {
+      removeLike("{{buffer.id}}");
+      toggleLikeBtn(false);
+    } else {
+      addLike({
+        id: "{{buffer.id}}",
+        title: "{{buffer.title}}",
+        thumb: "{{buffer.thumb}}",
+      });
+      toggleLikeBtn(true);
+    }
+  });
+  toggleLikeBtn(isLiked("{{buffer.id}}"));
 </script>
 {% endblock %}

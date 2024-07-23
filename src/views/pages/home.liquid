@@ -1,28 +1,49 @@
 {% layout '../layout/main.liquid' %}
 {% block page %}Home{% endblock %}
 {% block body %}
-  <section id="recently" class="my-4" hx-post="/htmx-component/animeList" hx-trigger="load" hx-swap="innerHtml">
-    {% render "components/animeList.liquid", head: "Recently Watch", animeList: [] %}
-  </section>
-  <section id="completed" class="my-4">
-    {% render "components/animeList.liquid"
-      , head: "Complete"
-      , animeList: buffer.complete
-      , more: true
-      , url: "/complete" %}
-  </section>
-  <section id="ongoing" class="my-4">
-    {% render "components/animeList.liquid"
-      , head: "On Going"
-      , animeList: buffer.on_going
-      , more: true
-      , url: "/ongoing" %}
-  </section>
-  <script src="/static/htmx.js"></script>
-  <script src="/public/localstorage.js"></script>
-  <script>
-    document.getElementById("recently").addEventListener("htmx:configRequest", function(event) {
-      event.detail.parameters['animeList'] = getCurrentlyWatchs();
-    });
-  </script>
+<section id="liked" class="my-4">
+  {% render "components/animeList.liquid", head: "Liked", animeList: [], id: "liked-anime" %}
+</section>
+<section id="recently" class="my-4" hx-post="/htmx-component/animeList" hx-trigger="load" hx-swap="innerHtml">
+  {% render "components/animeList.liquid", head: "Recently Watch", animeList: [] %}
+</section>
+<section id="completed" class="my-4">
+  {% render "components/animeList.liquid"
+  , head: "Complete"
+  , animeList: buffer.complete
+  , more: true
+  , url: "/complete" %}
+</section>
+<section id="ongoing" class="my-4">
+  {% render "components/animeList.liquid"
+  , head: "On Going"
+  , animeList: buffer.on_going
+  , more: true
+  , url: "/ongoing" %}
+</section>
+<script src="/static/htmx.js"></script>
+<script src="/public/localstorage.js"></script>
+<script>
+  document.getElementById("recently").addEventListener("htmx:configRequest", function (event) {
+    event.detail.parameters['animeList'] = getCurrentlyWatchs();
+  });
+  const liked = getLiked();
+  const likedContainer = document.getElementById("liked-anime");
+  if (liked.length > 0) {
+    likedContainer.innerHTML = liked.slice(0, 5).map(anime => {
+      return `
+      {% render "components/animeCard.liquid", thumb: "${anime.thumb}", link: "/detail/${anime.id}", title: "${anime.title}" %}
+      `;
+    }).join("");
+    if (liked.length > 5) {
+      likedContainer.innerHTML += `
+      {% render "components/moreButton.liquid", url: "/liked" %}
+      `;
+    }
+  } else {
+    likedContainer.innerHTML = `
+    <h2 class="text-white p-2 font-semibold">Nothing here 😢️</h2>
+    `;
+  }
+</script>
 {% endblock %}

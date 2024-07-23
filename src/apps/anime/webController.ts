@@ -79,6 +79,10 @@ export function getRecently(req: Request, res: Response) {
   res.render("pages/recently");
 }
 
+export function getLiked(req: Request, res: Response) {
+  res.render("pages/liked");
+}
+
 function genPages(page: number, lastPage: number) {
   if (lastPage > 12) {
     if (page <= 10 || page === lastPage) {
