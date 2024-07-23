@@ -2,10 +2,10 @@
 {% block page %}Home{% endblock %}
 {% block body %}
 <section id="liked" class="my-4">
-  {% render "components/animeList.liquid", head: "Liked", animeList: [], id: "liked-anime" %}
+  {% render "components/animeList.liquid", head: "Liked ❤️", animeList: [], id: "liked-anime" %}
 </section>
-<section id="recently" class="my-4" hx-post="/htmx-component/animeList" hx-trigger="load" hx-swap="innerHtml">
-  {% render "components/animeList.liquid", head: "Recently Watch", animeList: [] %}
+<section id="recently" class="my-4">
+  {% render "components/animeList.liquid", head: "Recently Watch", animeList: [], id: "recently-anime" %}
 </section>
 <section id="completed" class="my-4">
   {% render "components/animeList.liquid"
@@ -24,9 +24,22 @@
 <script src="/static/htmx.js"></script>
 <script src="/public/localstorage.js"></script>
 <script>
-  document.getElementById("recently").addEventListener("htmx:configRequest", function (event) {
-    event.detail.parameters['animeList'] = getCurrentlyWatchs();
-  });
+  const recently = getCurrentlyWatchs();
+  const recentlyContainer = document.getElementById("recently-anime");
+  if (recently.length > 0) {
+    recentlyContainer.innerHTML = recently.slice(0, 5).map(anime => {
+      return `
+      {% render "components/animeCard.liquid", thumb: "${anime.thumb}", link: "/detail/${anime.id}", title: "${anime.title}" %}
+      `;
+    }).join("") + `
+      {% render "components/moreButton.liquid", url: "/recently" %}
+    `;
+  } else {
+    recentlyContainer.innerHTML = `
+    <h2 class="text-white p-2 font-semibold">Nothing here 😢️</h2>
+    `;
+  }
+
   const liked = getLiked();
   const likedContainer = document.getElementById("liked-anime");
   if (liked.length > 0) {
@@ -34,12 +47,9 @@
       return `
       {% render "components/animeCard.liquid", thumb: "${anime.thumb}", link: "/detail/${anime.id}", title: "${anime.title}" %}
       `;
-    }).join("");
-    if (liked.length > 5) {
-      likedContainer.innerHTML += `
+    }).join("") + `
       {% render "components/moreButton.liquid", url: "/liked" %}
       `;
-    }
   } else {
     likedContainer.innerHTML = `
     <h2 class="text-white p-2 font-semibold">Nothing here 😢️</h2>

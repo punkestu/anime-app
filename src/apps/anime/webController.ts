@@ -9,7 +9,10 @@ import {
 export async function Home(_: Request, res: Response) {
   try {
     const buffer = await getHomeAnime();
-    res.render("pages/home", { buffer });
+    res.render("pages/home", { buffer: {
+      complete: buffer.complete.slice(0, 5),
+      on_going: buffer.on_going.slice(0, 5),
+    } });
   } catch (err: any) {
     res.render("pages/error", { message: err as string });
   }
